@@ -3,16 +3,16 @@
 import { track as vercelTrack } from "@vercel/analytics";
 
 export type TrackedEvent =
-  | "order_delivery"
-  | "order_pickup"
-  | "call"
-  | "group_order"
-  | "map"
-  | "shop_link";
+  | "order_delivery_click"
+  | "order_pickup_click"
+  | "call_click"
+  | "group_order_click"
+  | "directions_click"
+  | "market_link_click";
 
 const UTM_KEYS = ["utm_source", "utm_medium", "utm_campaign"] as const;
 
-/** Reads UTM params from the current URL (once) so each event carries its source. */
+/** Reads UTM params from the current URL so each event carries its source. */
 function utmProps(): Record<string, string> {
   if (typeof window === "undefined") return {};
   const params = new URLSearchParams(window.location.search);
@@ -24,10 +24,7 @@ function utmProps(): Record<string, string> {
   return out;
 }
 
-/**
- * Record a conversion-relevant click.
- * Custom events show up in Vercel Analytics once the project is deployed.
- */
+/** Record a conversion-relevant click. Shows up as a custom event in Vercel Analytics. */
 export function track(event: TrackedEvent, props: Record<string, string> = {}) {
   try {
     vercelTrack(event, { ...utmProps(), ...props });

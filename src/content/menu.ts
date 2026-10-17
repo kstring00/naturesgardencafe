@@ -1,4 +1,4 @@
-import { fact, type Fact } from "./types";
+import { fact } from "./types";
 
 export type Filling = "beef" | "chicken" | "spinach";
 
@@ -7,23 +7,17 @@ export interface MenuItem {
   name: string;
   /** Price in US cents. Verified from the printed menu. */
   priceCents: number;
+  /** Plain English for people who don't know the dish. */
   description: string;
-  /** Drop a cropped menu photo at /public/images/menu/<slug>.jpg and set this. */
-  image: Fact<{ src: string; alt: string }>;
+  tags?: ("vegetarian" | "gluten-free")[];
 }
 
 export interface EmpanadaFilling {
   filling: Filling;
   name: string;
   description: string;
+  tags?: ("vegetarian" | "gluten-free")[];
 }
-
-const noPhoto = (what: string) =>
-  fact<{ src: string; alt: string }>(
-    null,
-    "missing",
-    `A real photo of the ${what}.`,
-  );
 
 /** Sandwiches, from the printed menu. Prices verified. */
 export const sandwiches: MenuItem[] = [
@@ -32,63 +26,44 @@ export const sandwiches: MenuItem[] = [
     name: "Lomito Steak Sandwich",
     priceCents: 2399,
     description:
-      "Argentina's favorite sandwich. Thin-sliced steak on fresh bread.",
-    image: noPhoto("Lomito"),
+      "Argentina's favorite sandwich: thin-sliced steak piled on fresh bread with the fixings.",
   },
   {
     slug: "milanesa",
     name: "Milanesa Sandwich",
     priceCents: 2199,
-    description: "Crisp breaded cutlet, the home-style classic.",
-    image: noPhoto("Milanesa"),
+    description:
+      "A thin breaded cutlet, fried crisp, served in fresh bread. Think of it as the Argentine schnitzel sandwich.",
   },
   {
     slug: "chorizo",
     name: "Chorizo Sandwich",
     priceCents: 1950,
-    description: "Grilled Argentine sausage on a fresh roll.",
-    image: noPhoto("Chorizo sandwich"),
+    description: "Grilled Argentine sausage on a crusty roll, the classic you'd get at an asado.",
   },
   {
     slug: "pollo",
     name: "Grilled Chicken Sandwich",
     priceCents: 1850,
-    description: "Grilled chicken, simply done.",
-    image: noPhoto("Grilled Chicken Sandwich"),
+    description: "Grilled chicken breast on fresh bread, simply done.",
   },
 ];
 
 /** Empanadas: $4.25 each, three fillings shown on the printed menu. */
 export const empanadas = {
   priceEachCents: 425,
+  intro:
+    "A baked hand pie with a crimped edge. Argentina's favorite snack, lunch and party food.",
   fillings: [
-    {
-      filling: "beef",
-      name: "Beef",
-      description: "The classic.",
-    },
-    {
-      filling: "chicken",
-      name: "Chicken",
-      description: "Mild and savory.",
-    },
-    {
-      filling: "spinach",
-      name: "Spinach",
-      description: "Vegetarian.",
-    },
+    { filling: "beef", name: "Beef", description: "The classic." },
+    { filling: "chicken", name: "Chicken", description: "Mild and savory." },
+    { filling: "spinach", name: "Spinach", description: "Vegetarian.", tags: ["vegetarian"] },
   ] satisfies EmpanadaFilling[],
   /** Dozen pricing is NOT confirmed. We only show the per-piece price. */
-  dozenPrice: fact<number>(
-    null,
-    "assumed",
-    "Is there a price break for a dozen? Minimum notice for large orders?",
-  ),
+  dozenPrice: fact<number>(null, "missing", "Is there a price break for a dozen? Minimum notice for large orders?"),
 };
 
-/** Full menu is missing. The page says so honestly instead of inventing items. */
-export const fullMenu = fact<string>(
-  null,
-  "missing",
-  "The rest of the menu: soups, salads, desserts, drinks, with prices.",
-);
+export const menuNotes = {
+  partial: "Soups, salads and daily specials change with the day. Call for today's board.",
+  callForMore: "Call for today's soups and salads",
+};

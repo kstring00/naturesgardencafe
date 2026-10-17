@@ -4,13 +4,16 @@ import { Analytics } from "@vercel/analytics/next";
 import { OrderProvider } from "@/components/ui/OrderPanel";
 import { MotionProvider } from "@/components/motion/MotionProvider";
 import { site } from "@/content/site";
+import { siteMode, siteUrl } from "@/lib/env";
 import "./globals.css";
 
 const fraunces = localFont({
-  src: "../fonts/Fraunces-Variable.woff2",
+  src: [
+    { path: "../fonts/Fraunces-Variable.woff2", weight: "100 900", style: "normal" },
+    { path: "../fonts/Fraunces-Italic.woff2", weight: "100 900", style: "italic" },
+  ],
   variable: "--font-fraunces",
   display: "swap",
-  weight: "100 900",
   adjustFontFallback: "Times New Roman",
 });
 
@@ -22,33 +25,26 @@ const instrument = localFont({
   adjustFontFallback: "Arial",
 });
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+const title = `${site.name} | Argentinian Food Delivery in Friendswood, TX`;
+const description =
+  "Argentinian food, organic and natural, in Friendswood, TX. Lomito, milanesa and fresh-baked empanadas for delivery or pickup from the café inside Nature's Garden.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: `${site.name} | Argentinian Food Delivery in Friendswood, TX`,
-  description:
-    "Argentinian food, organic and natural, in Friendswood, TX. Lomito, milanesa and fresh-baked empanadas for delivery or pickup from the café inside Nature's Garden.",
-  keywords: [
-    "Argentinian food",
-    "empanadas",
-    "delivery",
-    "Friendswood",
-    "lomito",
-    "milanesa",
-    "organic café",
-  ],
+  title,
+  description,
+  keywords: ["Argentinian food", "empanadas", "delivery", "Friendswood", "lomito", "milanesa", "organic café"],
   alternates: { canonical: "/" },
   openGraph: {
     type: "website",
     locale: "en_US",
+    url: "/",
     siteName: site.name,
-    title: `${site.name} | Argentinian Food Delivery in Friendswood, TX`,
-    description:
-      "Lomito, milanesa and fresh-baked empanadas, delivered or ready for pickup in Friendswood.",
+    title,
+    description: "Lomito, milanesa and fresh-baked empanadas, delivered or ready for pickup in Friendswood.",
   },
-  twitter: { card: "summary_large_image" },
-  robots: site.demo ? { index: false, follow: false } : undefined,
+  twitter: { card: "summary_large_image", title, description },
+  robots: siteMode === "demo" ? { index: false, follow: false } : { index: true, follow: true },
 };
 
 export const viewport: Viewport = {
@@ -60,9 +56,7 @@ export const viewport: Viewport = {
 /** Runs before paint: turns motion on only when the visitor has not asked for reduced motion. */
 const motionFlagScript = `(function(){try{if(!matchMedia('(prefers-reduced-motion: reduce)').matches){document.documentElement.dataset.motion='on'}}catch(e){}})()`;
 
-export default function RootLayout({
-  children,
-}: Readonly<{ children: React.ReactNode }>) {
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className={`${fraunces.variable} ${instrument.variable}`}>
       <head>
