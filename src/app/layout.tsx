@@ -7,21 +7,21 @@ import { site } from "@/content/site";
 import { siteMode, siteUrl } from "@/lib/env";
 import "./globals.css";
 
-const fraunces = localFont({
+const bodoni = localFont({
   src: [
-    { path: "../fonts/Fraunces-Variable.woff2", weight: "100 900", style: "normal" },
-    { path: "../fonts/Fraunces-Italic.woff2", weight: "100 900", style: "italic" },
+    { path: "../fonts/BodoniModa-Variable.woff2", weight: "400 900", style: "normal" },
+    { path: "../fonts/BodoniModa-Italic.woff2", weight: "400 900", style: "italic" },
   ],
-  variable: "--font-fraunces",
+  variable: "--font-bodoni",
   display: "swap",
   adjustFontFallback: "Times New Roman",
 });
 
-const instrument = localFont({
-  src: "../fonts/InstrumentSans-Variable.woff2",
-  variable: "--font-instrument",
+const hanken = localFont({
+  src: "../fonts/HankenGrotesk-Variable.woff2",
+  variable: "--font-hanken",
   display: "swap",
-  weight: "400 700",
+  weight: "100 900",
   adjustFontFallback: "Arial",
 });
 
@@ -48,26 +48,26 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#f6efe3",
+  themeColor: "#fbf8f1",
   width: "device-width",
   initialScale: 1,
 };
 
-/** Runs before paint: turns motion on only when the visitor has not asked for reduced motion. */
-const motionFlagScript = `(function(){try{if(!matchMedia('(prefers-reduced-motion: reduce)').matches){document.documentElement.dataset.motion='on'}}catch(e){}})()`;
+/** Runs before paint: records the visitor's motion preference for CSS and the motion layer. */
+const motionFlagScript = `(function(){try{document.documentElement.dataset.motion=matchMedia('(prefers-reduced-motion: reduce)').matches?'off':'on'}catch(e){}})()`;
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${fraunces.variable} ${instrument.variable}`}>
+    <html lang="en" className={`${bodoni.variable} ${hanken.variable}`}>
       <head>
         <script dangerouslySetInnerHTML={{ __html: motionFlagScript }} />
       </head>
       <body className="min-h-dvh">
         <a
-          href="#menu"
-          className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] focus:rounded-full focus:bg-tinta focus:px-4 focus:py-2 focus:text-crema"
+          href="#carta"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] focus:rounded-full focus:bg-tinta focus:px-4 focus:py-2 focus:text-blanco"
         >
-          Skip to menu
+          Skip to the menu
         </a>
         <OrderProvider>
           <MotionProvider>{children}</MotionProvider>

@@ -2,6 +2,7 @@ import Link from "next/link";
 import { LeafWreath } from "@/components/brand/LeafWreath";
 import { PhoneLink } from "@/components/ui/OrderActions";
 import { site } from "@/content/site";
+import { hoursList } from "@/lib/story";
 
 function FacebookIcon() {
   return (
@@ -12,51 +13,60 @@ function FacebookIcon() {
 }
 
 export function SiteFooter() {
+  const hours = hoursList();
   return (
-    <footer className="border-t border-regla bg-crema-deep/60 pb-28 md:pb-10">
+    <footer className="border-t border-sombra pb-28 md:pb-10">
       <div className="mx-auto grid max-w-7xl gap-10 px-5 pt-14 sm:px-8 md:grid-cols-[1.4fr_1fr_1fr]">
         <div>
           <div className="flex items-center gap-3">
-            <LeafWreath className="h-10 w-10 text-oliva" />
-            <p className="font-display-italic text-2xl">{site.name}</p>
+            <LeafWreath className="h-10 w-10 text-verde" />
+            <p className="display-italic text-2xl">{site.name}</p>
           </div>
-          <p className="mt-3 max-w-sm text-tinta-soft">
-            {site.cuisine}. {site.taglines.organic}, {site.taglines.fresh.toLowerCase()}. Inside{" "}
-            {site.market.name}, {site.address.city}.
+          <p className="mt-3 max-w-sm text-tinta-70">
+            {site.cuisine}, organic and natural, inside {site.market.name} in {site.address.city}.
           </p>
-          {site.social.facebook && (
-            <a
-              href={site.social.facebook}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-oliva hover:text-tinta"
-            >
-              <FacebookIcon />
-              Find us on Facebook
-            </a>
-          )}
+          <a
+            href={site.social.facebook}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-verde hover:text-tinta"
+          >
+            <FacebookIcon />
+            Find us on Facebook
+          </a>
         </div>
 
         <div>
-          <p className="eyebrow">Visit</p>
-          <address className="mt-3 not-italic leading-relaxed">
+          <p className="display-italic text-xl">Visit</p>
+          <address className="mt-2 not-italic leading-relaxed">
             {site.address.line1}
             <br />
             {site.address.city}, {site.address.state} {site.address.zip}
           </address>
-          <p className="mt-1 text-sm text-tinta-soft">Inside {site.market.name}</p>
+          <p className="mt-1 text-sm text-tinta-70">Inside {site.market.name}</p>
         </div>
 
         <div>
-          <p className="eyebrow">Call</p>
-          <p className="mt-3 text-lg">
-            <PhoneLink source="footer" />
+          <p className="display-italic text-xl">Call</p>
+          <p className="mt-2 text-lg">
+            <PhoneLink source="footer" label={site.phone.display} />
           </p>
-          <p className="mt-1 text-sm text-tinta-soft">Call for today&rsquo;s hours.</p>
+          {hours.length ? (
+            <dl className="mt-3 space-y-0.5 text-sm">
+              {hours.map(([d, h]) => (
+                <div key={d} className="flex justify-between gap-4">
+                  <dt className="text-tinta-70">{d}</dt>
+                  <dd>{h}</dd>
+                </div>
+              ))}
+            </dl>
+          ) : (
+            <p className="mt-1 text-sm text-tinta-70">Call for today&rsquo;s hours.</p>
+          )}
         </div>
       </div>
 
-      <div className="mx-auto mt-12 flex max-w-7xl flex-col gap-3 border-t border-regla px-5 py-6 text-sm text-tinta-soft sm:flex-row sm:items-center sm:justify-between sm:px-8">
+      <div className="mx-auto mt-12 flex max-w-7xl flex-col gap-3 border-t border-sombra px-5 py-6 text-sm text-tinta-70 sm:flex-row sm:items-center sm:justify-between sm:px-8">
         <p>
           &copy; {site.year} {site.name}. All rights reserved.
         </p>

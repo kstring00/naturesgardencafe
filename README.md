@@ -7,8 +7,9 @@ One-page demo site for the organic Argentinian café inside Nature's Garden,
 *Request a group order* for empanadas by the dozen.
 
 ## Stack
-Next.js 16 (App Router) · Tailwind CSS 4 · TypeScript · GSAP + ScrollTrigger · Lenis · Vercel Analytics.
-Fonts (Fraunces, Instrument Sans) are self-hosted from `src/fonts/` under the OFL.
+Next.js 16 (App Router), Tailwind CSS 4, TypeScript, GSAP + ScrollTrigger, Lenis (desktop), Three (lazy, the wreath),
+Embla (guest book), Leaflet on CARTO tiles (map), sharp (photo pipeline), Vercel Analytics.
+Fonts (Bodoni Moda, Hanken Grotesk) are self-hosted from `src/fonts/` under the OFL.
 
 ## Run it
 ```bash
@@ -28,37 +29,49 @@ Import the repo in Vercel. Environment variables (see `.env.example`):
 
 Enable Analytics in the Vercel project; custom click events need the Pro plan.
 
-## Photos
-Drop `empanadas.jpg`, `sandwiches.jpg` and `logo.jpg` into `public/photos/` (see the README there).
-The build checks for them; missing files fall back to illustration, never a broken image.
+## Photos and story
+- `content/photos.json` maps each slot (door, counter, hands, tray, lomito, milanesa, board, marina) to a source file
+  under `public/photos/`. `npm run photos` (also runs before every build) writes 1600px web sizes, blur placeholders
+  and `content/photos.generated.json`, and prints which slots are still stock stand-ins.
+- Stand-ins come from Unsplash (credits in `content/credits.json`) and render with a "Sample photo. Yours goes here."
+  caption until `isStock` is false.
+- `content/story.json` holds Marina's words and confirmed facts. Empty fields hide their sections. The build prints
+  the empty ones.
 
 ## How the site is organized
 ```
+content/          story.json (Marina's words), photos.json (slots), credits.json, photos.generated.json (built)
+scripts/photos.mjs  sharp pipeline: resize, blur placeholders, stock + empty-field report
 src/
-  app/            routes: page, layout, 404, privacy, favicon, share image
+  app/            routes: page, layout, 404, privacy, favicon, share image (uses tray.jpg)
   components/
-    sections/     Hero, Menu, Reviews, HowDelivery (+Faq), DozenOrders, FindUs
-    layout/       SiteHeader, SiteFooter, StickyOrderBar (mobile)
-    ui/           Button, OrderPanel (call-to-order dialog), OrderActions, MapCard, RepulgueDivider, CrimpIcon
-    brand/        LogoLockup, LeafWreath, LeafCorner, EmpanadaIllustration (hero fallback)
-    motion/       MotionProvider: all scroll effects in one place, loaded after first paint
-  content/        site.ts, menu.ts, reviews.ts: every fact carries verified / assumed / missing
-  lib/            env, photos (build-time existence check), analytics (+utm), motion, price formatting
-docs/             objection map, 5-minute user test, launch checklist, what Marina must confirm
-public/photos/    the three menu crops (see public/photos/README.md)
+    sections/     HeroWalkIn, WreathMoment, Pamphlet (+PamphletFold), TresHistorias (+HistoriasPinned),
+                  GuestBook, DeliveryRibbon (+RibbonDraw), FindUs (+DeliveryMap), Origin, GroupOrders
+    three/        WreathCanvas (loader + static fallback), WreathScene (plain Three, lazy)
+    layout/       SiteHeader, SiteFooter, StickyOrderBar
+    ui/           Button, OrderPanel, OrderActions, Photo (grade + sample caption)
+    brand/        Ribbon, CornerRibbon, LogoLockup, LeafWreath
+    motion/       MotionProvider (Lenis on desktop only)
+  content/        site.ts (fixed facts), menu.ts, reviews.ts
+  lib/            env, story, photos, empanada (crimp paths), analytics (+utm), motion, format
+docs/             objection map, user test, launch checklist, what Marina must confirm
+public/photos/    stock/ (Unsplash originals), own/ (Marina's), generated web sizes
 ```
 
+### The four motions, and no others
+1. Hero walk-in (scroll-scrubbed): `HeroWalkIn`
+2. Delivery ribbon draws itself (once): `RibbonDraw`
+3. Map rings draw outward (once): `DeliveryMap`
+4. The wreath assembling (once): `WreathScene`
+Plus two interactive reveals tied to scroll: the pamphlet fold and the empanada morph. Everything else is static.
+`prefers-reduced-motion` renders finished states.
+
 ### Honesty rules baked in
-- A fact with status `missing` (or no value) is not rendered. No placeholders, no lorem.
+- Empty `story.json` fields hide their sections. No placeholders, no lorem, no "Marina will confirm" copy.
+- Stand-in photos are captioned as samples until a real file replaces them.
 - Prices and item names come from the printed menu only.
 - The order buttons open a call-to-order panel until `NEXT_PUBLIC_ORDER_URL` points at real ordering. No fake checkout.
 - Marina's personal number is never in the code; only the store line.
-
-### Motion
-Content is in the HTML from the start. CSS handles the hero reveal and the leaf draw-in;
-GSAP scrubs the repulgue dividers, the delivery route and the hero parallax.
-`prefers-reduced-motion` shows the final state. Lenis runs on desktop pointer devices only.
-Components opt in with data attributes (`data-draw-path`, `data-parallax`, `data-route`).
 
 ## Next steps
 See `docs/marina-confirms.md` for what to get from Marina, in order.

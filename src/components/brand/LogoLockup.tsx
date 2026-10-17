@@ -1,29 +1,15 @@
 import { LeafWreath } from "./LeafWreath";
 
-/**
- * Logo lockup recreated in vector: leaf wreath + "Nature's Garden" in Fraunces italic
- * + "CAFE & RESTO" in small caps. Replaces the low-res crop from the printed menu.
- */
-export function LogoLockup({
-  className = "",
-  draw = false,
-  size = "md",
-}: {
-  className?: string;
-  draw?: boolean;
-  size?: "sm" | "md" | "lg";
-}) {
+/** Wreath + "Nature's Garden" in Bodoni italic + a small celeste tag for the café. */
+export function LogoLockup({ className = "", size = "md", tone = "dark" }: { className?: string; size?: "sm" | "md" | "lg"; tone?: "dark" | "light" }) {
   const wreath = size === "lg" ? "h-16 w-16" : size === "sm" ? "h-9 w-9" : "h-11 w-11";
-  const word = size === "lg" ? "text-3xl" : size === "sm" ? "text-base" : "text-xl";
-  const caps = size === "lg" ? "text-xs" : "text-[0.6rem]";
+  const word = size === "lg" ? "text-4xl" : size === "sm" ? "text-lg" : "text-2xl";
   return (
     <span className={`inline-flex items-center gap-3 ${className}`}>
-      <LeafWreath className={`${wreath} shrink-0 text-oliva`} draw={draw} />
+      <LeafWreath className={`${wreath} shrink-0 ${tone === "light" ? "text-blanco" : "text-verde"}`} />
       <span className="flex flex-col leading-none">
-        <span className={`font-display-italic ${word} leading-none text-tinta`}>
-          Nature&rsquo;s Garden
-        </span>
-        <span className={`${caps} mt-1 font-sans font-semibold uppercase tracking-[0.22em] text-oliva`}>
+        <span className={`display-italic ${word} ${tone === "light" ? "text-blanco" : "text-tinta"}`}>Nature&rsquo;s Garden</span>
+        <span className="mt-1 inline-flex w-fit items-center rounded-sm bg-celeste px-1.5 py-0.5 text-[0.68rem] font-semibold text-tinta">
           Cafe &amp; Resto
         </span>
       </span>

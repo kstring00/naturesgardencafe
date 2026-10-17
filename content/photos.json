@@ -1,0 +1,57 @@
+{
+  "_comment": "Each slot points at a source under public/photos/stock (stand-in) or public/photos/own (real). Run `npm run photos` to regenerate the web sizes. Set isStock to false when Marina's photo replaces the stand-in; the 'Sample photo' caption disappears.",
+  "door": {
+    "source": "stock/alisa-anton-OXi5Rf5mU10-unsplash.jpg",
+    "isStock": true,
+    "credit": "alisa-anton",
+    "alt": "A small caf\u00e9 storefront with an awning and two bistro tables by the door",
+    "crop": {
+      "left": 0,
+      "top": 0,
+      "width": 0.66,
+      "height": 1
+    }
+  },
+  "counter": {
+    "source": "stock/andy-li-RndRFJ1v1kk-unsplash.jpg",
+    "isStock": true,
+    "credit": "andy-li",
+    "alt": "A warm bakery counter with shelves of fresh bread and someone working behind it"
+  },
+  "hands": {
+    "source": "stock/jason-jarrach-rom08sTE2VI-unsplash.jpg",
+    "isStock": true,
+    "credit": "jason-jarrach",
+    "alt": "Two hands pressing out dough on a floured steel tray"
+  },
+  "tray": {
+    "source": "stock/katherine-volkovski-VrawXIlgazM-unsplash.jpg",
+    "isStock": true,
+    "credit": "katherine-volkovski",
+    "alt": "A tray of hand-crimped empanadas laid out on wooden boards"
+  },
+  "lomito": {
+    "source": "stock/aigars-peda-a_iKAg00LN4-unsplash.jpg",
+    "isStock": true,
+    "credit": "aigars-peda",
+    "alt": "A toasted steak sandwich with greens on a wooden board"
+  },
+  "milanesa": {
+    "source": "stock/caramel-3IHKG-iqAmc-unsplash.jpg",
+    "isStock": true,
+    "credit": "caramel",
+    "alt": "Breaded cutlet sandwiches wrapped in paper, cut to show the crisp crust"
+  },
+  "board": {
+    "source": "stock/haberdoedas-xGpFIXILauE-unsplash.jpg",
+    "isStock": true,
+    "credit": "haberdoedas",
+    "alt": "A chalkboard listing the day's specials outside a caf\u00e9"
+  },
+  "marina": {
+    "source": "",
+    "isStock": false,
+    "credit": "",
+    "alt": "Marina at the caf\u00e9 counter"
+  }
+}

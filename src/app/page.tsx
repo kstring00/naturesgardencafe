@@ -1,18 +1,23 @@
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { StickyOrderBar } from "@/components/layout/StickyOrderBar";
-import { Hero } from "@/components/sections/Hero";
-import { Menu } from "@/components/sections/Menu";
-import { Reviews } from "@/components/sections/Reviews";
-import { HowDelivery } from "@/components/sections/HowDelivery";
-import { DozenOrders } from "@/components/sections/DozenOrders";
+import { HeroWalkIn } from "@/components/sections/HeroWalkIn";
+import { WreathMoment } from "@/components/sections/WreathMoment";
+import { Pamphlet } from "@/components/sections/Pamphlet";
+import { TresHistorias } from "@/components/sections/TresHistorias";
+import { GuestBook } from "@/components/sections/GuestBook";
+import { DeliveryRibbon } from "@/components/sections/DeliveryRibbon";
 import { FindUs } from "@/components/sections/FindUs";
-import { RepulgueDivider } from "@/components/ui/RepulgueDivider";
+import { Origin } from "@/components/sections/Origin";
+import { GroupOrders } from "@/components/sections/GroupOrders";
 import { site } from "@/content/site";
-import { isShown } from "@/content/types";
 import { siteUrl } from "@/lib/env";
+import { getPhoto } from "@/lib/photos";
+import { hoursList, story } from "@/lib/story";
 
-/** Structured data: only facts we have. No hours or ratings until confirmed. */
+const hours = hoursList();
+
+/** Structured data: only facts we have. Hours appear once story.json carries them. */
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "Restaurant",
@@ -22,7 +27,7 @@ const jsonLd = {
   servesCuisine: "Argentinian",
   priceRange: "$$",
   telephone: site.phone.schema,
-  hasMenu: `${siteUrl}/#menu`,
+  hasMenu: `${siteUrl}/#carta`,
   address: {
     "@type": "PostalAddress",
     streetAddress: site.address.line1,
@@ -31,34 +36,28 @@ const jsonLd = {
     postalCode: site.address.zip,
     addressCountry: "US",
   },
+  geo: { "@type": "GeoCoordinates", latitude: story.location.lat, longitude: story.location.lng },
   hasMap: site.address.mapsUrl,
-  sameAs: [site.social.facebook, site.market.url].filter(Boolean),
-  ...(isShown(site.hours)
-    ? {
-        openingHoursSpecification: site.hours.value.map((h) => ({
-          "@type": "OpeningHoursSpecification",
-          dayOfWeek: h.days,
-          opens: h.open,
-          closes: h.close,
-        })),
-      }
-    : {}),
+  sameAs: [site.social.facebook, site.market.url],
+  ...(hours.length ? { openingHours: hours.map(([d, h]) => `${d} ${h}`) } : {}),
 };
 
 export default function HomePage() {
+  const door = getPhoto("door");
+  const counter = getPhoto("counter");
   return (
     <>
       <SiteHeader />
       <main id="main">
-        <Hero />
-        <RepulgueDivider tone="dorado" />
-        <Menu />
-        <RepulgueDivider tone="oliva" flip />
-        <Reviews />
-        <HowDelivery />
-        <RepulgueDivider tone="dorado" />
-        <DozenOrders />
+        {door && <HeroWalkIn door={door} counter={counter} doorHandle={story.doorHandle} />}
+        <WreathMoment />
+        <Pamphlet />
+        <TresHistorias />
+        <GuestBook />
+        <DeliveryRibbon />
         <FindUs />
+        <Origin />
+        <GroupOrders />
       </main>
       <SiteFooter />
       <StickyOrderBar />

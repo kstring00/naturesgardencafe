@@ -1,45 +1,25 @@
-import { existsSync } from "node:fs";
-import { join } from "node:path";
-
-/**
- * Photos cropped from the printed menu live in /public/photos.
- * Dimensions are fixed here so <Image> can reserve space (no layout shift).
- * If a file is missing, the section falls back to illustration instead of a broken image.
- * Server-only: call from server components or route handlers.
- */
-export const PHOTOS = {
-  empanadas: {
-    file: "empanadas.jpg",
-    width: 960,
-    height: 380,
-    alt: "Golden baked empanadas with crimped edges on a wooden board",
-  },
-  sandwiches: {
-    file: "sandwiches.jpg",
-    width: 670,
-    height: 460,
-    alt: "Argentine sandwiches: lomito steak and milanesa on fresh bread",
-  },
-  logo: {
-    file: "logo.jpg",
-    width: 290,
-    height: 255,
-    alt: "Nature's Garden Cafe & Resto logo",
-  },
-} as const;
-
-export type PhotoKey = keyof typeof PHOTOS;
+import generated from "../../content/photos.generated.json";
+import credits from "../../content/credits.json";
 
 export interface Photo {
   src: string;
   width: number;
   height: number;
   alt: string;
+  isStock: boolean;
+  credit: string | null;
+  blurDataURL: string;
 }
 
-export function getPhoto(key: PhotoKey): Photo | null {
-  const p = PHOTOS[key];
-  const onDisk = join(process.cwd(), "public", "photos", p.file);
-  if (!existsSync(onDisk)) return null;
-  return { src: `/photos/${p.file}`, width: p.width, height: p.height, alt: p.alt };
-}
+export type PhotoSlot = "door" | "counter" | "hands" | "tray" | "lomito" | "milanesa" | "marina" | "board";
+
+const photos = generated as Partial<Record<PhotoSlot, Photo>>;
+
+/** A web-sized photo for a slot, or null when no file exists yet (the section hides). */
+export const getPhoto = (slot: PhotoSlot): Photo | null => photos[slot] ?? null;
+
+export const stockSlots = () =>
+  (Object.entries(photos) as [PhotoSlot, Photo][]).filter(([, p]) => p.isStock).map(([k]) => k);
+
+export const creditFor = (key: string | null) =>
+  key ? (credits as Record<string, { name: string; platform: string; url: string }>)[key] ?? null : null;

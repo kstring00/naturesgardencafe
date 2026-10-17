@@ -1,0 +1,65 @@
+{
+  "door": {
+    "src": "/photos/door.jpg",
+    "width": 1600,
+    "height": 1616,
+    "alt": "A small café storefront with an awning and two bistro tables by the door",
+    "isStock": true,
+    "credit": "alisa-anton",
+    "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAAQABADASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAABAX/xAAjEAACAQMDBAMAAAAAAAAAAAABAgMAESEEEkEFExQxI1Fx/8QAFAEBAAAAAAAAAAAAAAAAAAAAA//EABURAQEAAAAAAAAAAAAAAAAAAAAR/9oADAMBAAIRAxEAPwCd02ZvISHcAG4pOv8Alg3oXRMH3YH3RAzQkNDCNnLHJP3S21ml7AjBdcAXObW/eaGFr//Z"
+  },
+  "counter": {
+    "src": "/photos/counter.jpg",
+    "width": 1600,
+    "height": 1067,
+    "alt": "A warm bakery counter with shelves of fresh bread and someone working behind it",
+    "isStock": true,
+    "credit": "andy-li",
+    "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAALABADASIAAhEBAxEB/8QAFwAAAwEAAAAAAAAAAAAAAAAAAQIEBf/EAB8QAAIBBAIDAAAAAAAAAAAAAAECAwAEESESEzFBUf/EABQBAQAAAAAAAAAAAAAAAAAAAAP/xAAXEQEBAQEAAAAAAAAAAAAAAAARACEi/9oADAMBAAIRAxEAPwDHs1gIfuPvA3jVG9jt42VYRsNhgWzmlhduJGtN8quzRZbpVkUOD55bojWZ5L//2Q=="
+  },
+  "hands": {
+    "src": "/photos/hands.jpg",
+    "width": 1600,
+    "height": 1067,
+    "alt": "Two hands pressing out dough on a floured steel tray",
+    "isStock": true,
+    "credit": "jason-jarrach",
+    "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAALABADASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAABQP/xAAiEAACAgEDBAMAAAAAAAAAAAABAgMRAAQTIgUSITJBgZH/xAAVAQEBAAAAAAAAAAAAAAAAAAAAAf/EABcRAAMBAAAAAAAAAAAAAAAAAAABIQL/2gAMAwEAAhEDEQA/AKPpowEchkVloqPXyMP18W2e4xN8BTVBcVkkeNNtTwAsAi6/cG6hPLIeb39YSpXqH//Z"
+  },
+  "tray": {
+    "src": "/photos/tray.jpg",
+    "width": 1600,
+    "height": 1093,
+    "alt": "A tray of hand-crimped empanadas laid out on wooden boards",
+    "isStock": true,
+    "credit": "katherine-volkovski",
+    "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAALABADASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAABAP/xAAhEAACAgECBwAAAAAAAAAAAAABAgMRACExQVGBocHR8P/EABQBAQAAAAAAAAAAAAAAAAAAAAP/xAAWEQEBAQAAAAAAAAAAAAAAAAARAAH/2gAMAwEAAhEDEQA/ABxxBnjegtaj7rjYWaIELVSNe3GsHCxMaE8vWXJPdfGE7IYX/9k="
+  },
+  "lomito": {
+    "src": "/photos/lomito.jpg",
+    "width": 1600,
+    "height": 2400,
+    "alt": "A toasted steak sandwich with greens on a wooden board",
+    "isStock": true,
+    "credit": "aigars-peda",
+    "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAAYABADASIAAhEBAxEB/8QAGAAAAgMAAAAAAAAAAAAAAAAAAAQBAwb/xAAjEAABAwMEAgMAAAAAAAAAAAABAgMEABExEiJRYRMhIzJB/8QAFwEAAwEAAAAAAAAAAAAAAAAAAAECA//EABoRAAMBAAMAAAAAAAAAAAAAAAABEQISISL/2gAMAwEAAhEDEQA/AMtEiuS3Q20AVHk2FPPQGovxOqu71+ngU9DiABoAlLedouSqonqjxfIWEF1xxOncn693Ps1nzriLeIqxUPuqA0KtpwcW7qmQ4G9xWFrOOaKKMrsen5P/2Q=="
+  },
+  "milanesa": {
+    "src": "/photos/milanesa.jpg",
+    "width": 1600,
+    "height": 1280,
+    "alt": "Breaded cutlet sandwiches wrapped in paper, cut to show the crisp crust",
+    "isStock": true,
+    "credit": "caramel",
+    "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAANABADASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAABAEF/8QAIBAAAgEEAgMBAAAAAAAAAAAAAQIDABESIQQxE0GBUf/EABUBAQEAAAAAAAAAAAAAAAAAAAME/8QAFREBAQAAAAAAAAAAAAAAAAAAAAH/2gAMAwEAAhEDEQA/AAxcaLxYnj4jrfVPYxRJiYogPw2uPlZ8pMauVZgVALb0wHq32q74qdXCrkV9GpqZ/9k="
+  },
+  "board": {
+    "src": "/photos/board.jpg",
+    "width": 1600,
+    "height": 2133,
+    "alt": "A chalkboard listing the day's specials outside a café",
+    "isStock": true,
+    "credit": "haberdoedas",
+    "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAAVABADASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAAME/8QAIhAAAgEDBAIDAAAAAAAAAAAAAQIDABESBAUhIjFBE2Hw/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAH/xAAVEQEBAAAAAAAAAAAAAAAAAAAAEf/aAAwDAQACEQMRAD8ANuccseoUhs3U49QexvzWSfcIlk0rhxnCgBBX3++qhr5VXEAWPmoQRLPn8qk2II5t6qyFrVMcj2ANx4NQRyqi3HFqUqD/2Q=="
+  }
+}

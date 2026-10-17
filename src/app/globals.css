@@ -1,27 +1,26 @@
 @import "tailwindcss";
 
-/* ---------- "La Carta" design tokens ---------- */
+/* ---------- "Fileteado" tokens ---------- */
 @theme {
-  --color-crema: #f6efe3;
-  --color-crema-deep: #ede3d0;
-  --color-tinta: #2a2418;
-  --color-tinta-soft: #5a5243;
-  --color-oliva: #4e5b31;
-  --color-hoja: #7a8f3c;
-  --color-cielo: #75aadb;
-  --color-dorado: #d9a441;
-  --color-dorado-deep: #b9872a;
-  --color-regla: #ddd2bf;
+  --color-celeste: #74acdf;
+  --color-celeste-deep: #4f8fc9;
+  --color-blanco: #fbf8f1;
+  --color-verde: #4e5b31;
+  --color-trigo: #d9a441;
+  --color-trigo-deep: #b9872a;
+  --color-trigo-ink: #7a5a12;
+  --color-tinta: #1f1b14;
+  --color-tinta-70: rgba(31, 27, 20, 0.7);
+  --color-sombra: #eae4d6;
 
-  --font-display: var(--font-fraunces), "Iowan Old Style", Georgia, serif;
-  --font-sans: var(--font-instrument), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-bodoni), "Bodoni 72", "Didot", Georgia, serif;
+  --font-sans: var(--font-hanken), ui-sans-serif, system-ui, sans-serif;
 
-  --text-hero: clamp(3.5rem, 11vw, 9rem);
-  --text-display: clamp(2.25rem, 6vw, 4.5rem);
-  --text-h2: clamp(2rem, 4.5vw, 3.5rem);
-  --text-item: clamp(1.375rem, 2.6vw, 2rem);
+  --text-ribbon: clamp(1.6rem, 3.2vw, 2.8rem);
+  --text-title: clamp(2.25rem, 4.5vw, 3.75rem);
+  --text-chapter: clamp(2rem, 4vw, 3.25rem);
 
-  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-paper: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 /* ---------- base ---------- */
@@ -36,153 +35,188 @@ html {
 }
 
 body {
-  background-color: var(--color-crema);
+  background-color: var(--color-blanco);
   color: var(--color-tinta);
   font-family: var(--font-sans);
-  font-feature-settings: "ss01";
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   overflow-x: clip;
 }
 
-/* Paper grain. A tiny inline SVG noise tile at ~4% opacity, above the page, below pointer events. */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: 60;
-  pointer-events: none;
-  opacity: 0.04;
-  mix-blend-mode: multiply;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .9 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
-}
-
 ::selection {
-  background: var(--color-dorado);
+  background: var(--color-celeste);
   color: var(--color-tinta);
 }
 
 :focus-visible {
-  outline: 3px solid var(--color-cielo);
+  outline: 3px solid var(--color-celeste-deep);
   outline-offset: 3px;
   border-radius: 4px;
 }
 
-/* ---------- type utilities ---------- */
-.font-display {
+/* ---------- type ---------- */
+.display {
   font-family: var(--font-display);
   font-optical-sizing: auto;
-  font-variation-settings: "SOFT" 60, "WONK" 1;
-  letter-spacing: -0.015em;
+  letter-spacing: -0.01em;
+  line-height: 1.02;
 }
-.font-display-italic {
+.display-italic {
   font-family: var(--font-display);
   font-style: italic;
   font-optical-sizing: auto;
-  font-variation-settings: "SOFT" 40, "WONK" 1;
-  letter-spacing: -0.01em;
-}
-.font-display-plain {
-  font-family: var(--font-display);
-  font-optical-sizing: auto;
-  font-variation-settings: "SOFT" 30, "WONK" 0;
+  letter-spacing: -0.005em;
+  line-height: 1.05;
 }
 .price {
   font-family: var(--font-display);
   font-variant-numeric: tabular-nums lining-nums;
-  font-variation-settings: "SOFT" 20, "WONK" 0;
-  color: var(--color-dorado-deep);
+  color: var(--color-trigo-ink);
 }
-.eyebrow {
-  font-size: 0.75rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  font-weight: 600;
-  color: var(--color-oliva);
+/* Gold outline for one word inside a ribbon only. */
+.outlined {
+  color: transparent;
+  -webkit-text-stroke: 1px var(--color-trigo);
+  paint-order: stroke fill;
 }
 
 /* Dotted leader between a menu item and its price, like a printed carta. */
 .leader {
   flex: 1 1 auto;
-  min-width: 1.5rem;
-  margin: 0 0.75rem;
-  border-bottom: 2px dotted color-mix(in oklab, var(--color-tinta) 35%, transparent);
-  transform: translateY(-0.45em);
+  min-width: 1.25rem;
+  margin: 0 0.6rem;
+  border-bottom: 2px dotted color-mix(in oklab, var(--color-tinta) 30%, transparent);
+  transform: translateY(-0.4em);
 }
 
-/* ---------- motion (CSS first; GSAP only enhances) ---------- */
-/* Hero headline: each line slides up from a masked wrapper. Only when JS has
-   confirmed motion is allowed (html[data-motion="on"]). Otherwise: final state. */
-.reveal-line {
-  display: block;
+/* ---------- paper ---------- */
+.paper {
+  background-color: var(--color-blanco);
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .06 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+.ruled {
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent 1.9rem,
+    color-mix(in oklab, var(--color-celeste) 28%, transparent) 1.9rem,
+    color-mix(in oklab, var(--color-celeste) 28%, transparent) calc(1.9rem + 1px)
+  );
+}
+
+/* Photos from mixed sources: a light shared grade so phone photos and stand-ins match. */
+.graded img,
+img.graded {
+  filter: saturate(0.92) contrast(1.03) sepia(0.08);
+}
+
+/* Stand-in caption */
+.sample-caption {
+  position: absolute;
+  left: 0.75rem;
+  bottom: 0.75rem;
+  font-size: 0.72rem;
+  line-height: 1;
+  color: var(--color-tinta-70);
+  background: color-mix(in oklab, var(--color-blanco) 85%, transparent);
+  padding: 0.35rem 0.55rem;
+  border-radius: 999px;
+  pointer-events: none;
+}
+
+/* ---------- pamphlet (La Carta) ---------- */
+.pamphlet-stage {
+  perspective: 1800px;
+}
+.pamphlet {
+  transform-style: preserve-3d;
+}
+.panel {
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+}
+.panel-back {
+  backface-visibility: hidden;
+  transform: rotateY(180deg);
+}
+.pamphlet-left {
+  transform-origin: right center;
+  transform: rotateY(var(--fold, -170deg));
+}
+.pamphlet-right {
+  transform-origin: left center;
+  transform: rotateY(calc(-1 * var(--fold, -170deg)));
+}
+html[data-motion="off"] .pamphlet-left,
+html[data-motion="off"] .pamphlet-right {
+  --fold: 0deg;
+}
+
+/* mobile carousel */
+.snap-x-carousel {
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.snap-x-carousel::-webkit-scrollbar {
+  display: none;
+}
+.snap-x-carousel > * {
+  scroll-snap-align: start;
+}
+
+/* ---------- Leaflet ---------- */
+.leaflet-container {
+  font-family: var(--font-sans);
+  background: var(--color-sombra);
+}
+.leaflet-control-attribution {
+  font-size: 10px;
+  background: color-mix(in oklab, var(--color-blanco) 80%, transparent) !important;
+  color: var(--color-tinta-70);
+}
+.town-label {
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-tinta);
+  text-shadow:
+    0 0 4px var(--color-blanco),
+    0 0 8px var(--color-blanco);
+  white-space: nowrap;
+}
+.ring-label {
+  background: color-mix(in oklab, var(--color-blanco) 88%, transparent);
+  border: 1px solid var(--color-trigo);
+  border-radius: 999px;
+  padding: 2px 8px;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  color: var(--color-tinta);
+  white-space: nowrap;
+  box-shadow: none;
+}
+
+/* ---------- Embla ---------- */
+.embla {
   overflow: hidden;
-  padding-bottom: 0.08em;
-  margin-bottom: -0.08em;
+  cursor: grab;
 }
-.reveal-line > span {
-  display: block;
+.embla:active {
+  cursor: grabbing;
 }
-html[data-motion="on"] .reveal-line > span {
-  transform: translateY(110%);
-  animation: line-up 0.7s var(--ease-out-soft) forwards;
-  animation-delay: calc(var(--i, 0) * 0.11s);
-}
-@keyframes line-up {
-  to {
-    transform: translateY(0);
-  }
+.embla__container {
+  display: flex;
+  touch-action: pan-y pinch-zoom;
 }
 
-html[data-motion="on"] .fade-up {
-  opacity: 0;
-  animation: fade-up 0.8s var(--ease-out-soft) forwards;
-  animation-delay: var(--d, 0.5s);
-}
-@keyframes fade-up {
-  from {
-    opacity: 0;
-    transform: translateY(14px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Logo leaves draw themselves in. pathLength="1" on each path makes the math trivial. */
-html[data-motion="on"] .draw-self path {
-  stroke-dasharray: 1;
-  stroke-dashoffset: 1;
-  animation: draw 1.1s var(--ease-out-soft) forwards;
-  animation-delay: calc(var(--i, 0) * 0.12s + 0.1s);
-}
-@keyframes draw {
-  to {
-    stroke-dashoffset: 0;
-  }
-}
-
-/* Scroll-driven paths (repulgue dividers, delivery route) are fully visible by
-   default. GSAP sets the dash and scrubs it; this only hints the browser. */
-[data-draw-path] {
-  will-change: stroke-dashoffset;
-}
-
-/* Delivery steps light up as the route reaches them. */
-.route-step {
-  transition:
-    opacity 0.4s var(--ease-out-soft),
-    transform 0.4s var(--ease-out-soft);
-}
-html[data-motion="on"] [data-route-ready] .route-step:not(.is-lit) {
-  opacity: 0.45;
-}
-.route-step .route-dot {
-  transition: background-color 0.3s, transform 0.3s var(--ease-out-soft);
-}
-.route-step.is-lit .route-dot {
-  background-color: var(--color-cielo);
-  transform: scale(1.15);
+/* ---------- dialog ---------- */
+dialog::backdrop {
+  background: color-mix(in oklab, var(--color-tinta) 55%, transparent);
+  backdrop-filter: blur(2px);
 }
 
 /* Lenis */
@@ -197,58 +231,50 @@ html.lenis body {
   overflow: hidden;
 }
 
-/* Photo cards: 2px crema inset border on a rounded frame. */
-.photo-card {
+/* ---------- hero "walk in" ---------- */
+.hero-track {
   position: relative;
+  height: 220vh;
+}
+.hero-stage {
+  position: sticky;
+  top: 0;
+  height: 100svh;
   overflow: hidden;
-  border-radius: 1.5rem;
-  background: var(--color-crema-deep);
-  box-shadow:
-    inset 0 0 0 2px var(--color-crema),
-    0 24px 50px -30px rgba(42, 36, 24, 0.45);
 }
-.photo-card > img {
-  display: block;
-  border-radius: 1.5rem;
-  padding: 2px;
+.hero-counter {
+  position: absolute;
+  inset: 0;
+  clip-path: circle(0% at var(--door-x, 50%) var(--door-y, 50%));
 }
-
-/* Paper-grain overlay for photos, so slight softness reads as warm print. */
-.grain {
-  pointer-events: none;
-  opacity: 0.12;
-  mix-blend-mode: multiply;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .9 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+/* Reduced motion: no pin, both photos stacked. */
+html[data-motion="off"] .hero-track {
+  height: auto;
 }
-
-/* FAQ accordion */
-.faq summary::marker {
-  content: "";
+html[data-motion="off"] .hero-stage {
+  position: relative;
+  height: 100svh;
 }
-
-/* Organic photo mask for the hero visual. */
-.blob-mask {
-  clip-path: path(
-    "M 318 18 C 400 -10 520 30 560 120 C 600 210 590 330 520 400 C 450 470 300 480 190 430 C 80 380 10 260 40 160 C 70 60 230 50 318 18 Z"
-  );
+html[data-motion="off"] .hero-counter {
+  position: relative;
+  inset: auto;
+  height: 60svh;
+  clip-path: none;
 }
-
-/* Native dialog polish */
-dialog::backdrop {
-  background: color-mix(in oklab, var(--color-tinta) 55%, transparent);
-  backdrop-filter: blur(2px);
-}
-dialog[open] {
-  animation: dialog-in 0.25s var(--ease-out-soft);
-}
-@keyframes dialog-in {
-  from {
-    opacity: 0;
-    transform: translateY(10px) scale(0.98);
+@media (max-width: 767px) {
+  .hero-track {
+    height: 180vh;
   }
 }
-@media (prefers-reduced-motion: reduce) {
-  dialog[open] {
-    animation: none;
+
+/* repulgue line redraws when a chapter changes */
+html[data-motion="on"] .repulgue-draw {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: repulgue 1.1s var(--ease-paper) 0.2s forwards;
+}
+@keyframes repulgue {
+  to {
+    stroke-dashoffset: 0;
   }
 }

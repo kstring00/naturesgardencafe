@@ -1,16 +1,7 @@
 "use client";
 
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-  type ReactNode,
-} from "react";
+import { createContext, useCallback, useContext, useEffect, useRef, useState, type ReactNode } from "react";
 import { groupOrderSms, site, telHref } from "@/content/site";
-import { isShown } from "@/content/types";
 import { track } from "@/lib/analytics";
 import { Button } from "./Button";
 
@@ -28,10 +19,7 @@ export function useOrder() {
   return ctx;
 }
 
-/**
- * The "Order from Nature's Garden" panel. Until online ordering is connected
- * (NEXT_PUBLIC_ORDER_URL), the fastest real path to an order is the phone.
- */
+/** Customer-facing order panel. Until NEXT_PUBLIC_ORDER_URL exists, the phone is the real path. */
 export function OrderProvider({ children }: { children: ReactNode }) {
   const [mode, setMode] = useState<OrderMode>("delivery");
   const dialogRef = useRef<HTMLDialogElement>(null);
@@ -55,28 +43,23 @@ export function OrderProvider({ children }: { children: ReactNode }) {
     return () => d.removeEventListener("click", onClick);
   }, []);
 
-  const pickupReady = site.delivery.pickupReadyTime;
-
   return (
     <OrderContext.Provider value={{ openPanel }}>
       {children}
       <dialog
         ref={dialogRef}
         aria-labelledby="order-panel-title"
-        className="m-auto w-[min(92vw,30rem)] rounded-3xl border border-tinta/10 bg-crema p-0 text-tinta shadow-2xl"
+        className="paper m-auto w-[min(92vw,30rem)] rounded-2xl border border-trigo p-0 text-tinta shadow-2xl"
       >
         <div className="p-7 sm:p-9">
-          <p className="eyebrow">{mode === "delivery" ? "Delivery" : "Pickup"}</p>
-          <h2 id="order-panel-title" className="font-display mt-2 text-3xl leading-tight sm:text-4xl">
+          <p className="display-italic text-lg text-verde">{mode === "delivery" ? "Delivery" : "Pickup"}</p>
+          <h2 id="order-panel-title" className="display mt-1 text-3xl sm:text-4xl">
             Order from Nature&rsquo;s Garden
           </h2>
-          <p className="mt-4 text-lg leading-relaxed text-tinta-soft">
-            Online ordering is on its way. For now, call and we&rsquo;ll have your order ready for
-            pickup or delivery.
+          <p className="mt-4 text-lg leading-relaxed text-tinta-70">
+            Online ordering is on its way. For now, call and we&rsquo;ll have your order ready for pickup or
+            delivery.
           </p>
-          {isShown(pickupReady) && (
-            <p className="mt-2 text-sm text-tinta-soft">{pickupReady.value}</p>
-          )}
           <div className="mt-6 flex flex-col gap-3">
             <Button asChild variant="primary" size="lg">
               <a href={telHref} onClick={() => track("call_click", { source: "order_panel" })}>
@@ -92,7 +75,7 @@ export function OrderProvider({ children }: { children: ReactNode }) {
           <button
             type="button"
             onClick={close}
-            className="mt-5 text-sm text-tinta-soft underline decoration-dorado underline-offset-4 hover:text-tinta"
+            className="mt-5 text-sm text-tinta-70 underline decoration-trigo underline-offset-4 hover:text-tinta"
           >
             Back to the menu
           </button>

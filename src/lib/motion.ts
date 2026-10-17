@@ -12,16 +12,23 @@ export const isTouchDevice = () =>
 export const motionAllowed = () => !prefersReducedMotion();
 
 /** Load GSAP + ScrollTrigger after first paint. Cached after the first call. */
+const idle = () =>
+  new Promise<void>((resolve) => {
+    if (typeof window === "undefined") return resolve();
+    const w = window as Window & { requestIdleCallback?: (cb: () => void, opts?: { timeout: number }) => number };
+    if (typeof w.requestIdleCallback === "function") w.requestIdleCallback(() => resolve(), { timeout: 1500 });
+    else setTimeout(resolve, 300);
+  });
+
 let gsapPromise: Promise<typeof import("gsap")["gsap"]> | null = null;
 export function loadGsap() {
   if (!gsapPromise) {
-    gsapPromise = Promise.all([
-      import("gsap"),
-      import("gsap/ScrollTrigger"),
-    ]).then(([{ gsap }, { ScrollTrigger }]) => {
-      gsap.registerPlugin(ScrollTrigger);
-      return gsap;
-    });
+    gsapPromise = idle()
+      .then(() => Promise.all([import("gsap"), import("gsap/ScrollTrigger")]))
+      .then(([{ gsap }, { ScrollTrigger }]) => {
+        gsap.registerPlugin(ScrollTrigger);
+        return gsap;
+      });
   }
   return gsapPromise;
 }

@@ -1,0 +1,48 @@
+{
+  "_comment": "Marina's words only. Leave a field empty rather than inventing. Empty fields hide their sections.",
+  "origin": "",
+  "whyArgentine": "",
+  "empanadas": {
+    "beef": {
+      "story": "",
+      "detail": ""
+    },
+    "chicken": {
+      "story": "",
+      "detail": ""
+    },
+    "spinach": {
+      "story": "",
+      "detail": ""
+    }
+  },
+  "dailyBoard": "",
+  "hours": {},
+  "delivery": {
+    "rings": [
+      {
+        "miles": 3,
+        "label": ""
+      },
+      {
+        "miles": 5,
+        "label": ""
+      },
+      {
+        "miles": 8,
+        "label": ""
+      }
+    ],
+    "fee": "",
+    "minimum": "",
+    "time": ""
+  },
+  "location": {
+    "lat": 29.5107,
+    "lng": -95.1856
+  },
+  "doorHandle": {
+    "x": 65,
+    "y": 52
+  }
+}

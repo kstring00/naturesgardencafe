@@ -1,27 +1,17 @@
-import {
-  Children,
-  cloneElement,
-  isValidElement,
-  type ButtonHTMLAttributes,
-  type ReactElement,
-  type ReactNode,
-} from "react";
+import { Children, cloneElement, isValidElement, type ButtonHTMLAttributes, type ReactElement, type ReactNode } from "react";
 
-type Variant = "primary" | "secondary" | "ghost";
+type Variant = "primary" | "secondary" | "quiet";
 type Size = "md" | "lg";
 
+/* Hover is a color change only. No lift, no magnetism. */
 const base =
-  "inline-flex items-center justify-center gap-2 rounded-full font-semibold leading-none " +
-  "transition-[transform,background-color,box-shadow,color] duration-200 ease-out select-none " +
-  "active:scale-[0.97] disabled:opacity-50 min-h-12";
+  "inline-flex items-center justify-center rounded-full font-semibold leading-none select-none " +
+  "transition-colors duration-200 min-h-12 disabled:opacity-50";
 
 const variants: Record<Variant, string> = {
-  primary:
-    "bg-dorado text-tinta shadow-[0_8px_24px_-10px_rgba(185,135,42,0.7)] " +
-    "hover:bg-dorado-deep hover:text-crema hover:shadow-[0_12px_28px_-10px_rgba(185,135,42,0.8)]",
-  secondary:
-    "border-2 border-tinta/80 text-tinta bg-transparent hover:bg-tinta hover:text-crema",
-  ghost: "text-tinta underline decoration-dorado decoration-2 underline-offset-4 hover:text-oliva",
+  primary: "bg-trigo text-tinta hover:bg-trigo-deep hover:text-blanco",
+  secondary: "border-2 border-tinta text-tinta bg-transparent hover:bg-tinta hover:text-blanco",
+  quiet: "text-tinta underline decoration-trigo decoration-2 underline-offset-4 hover:text-verde",
 };
 
 const sizes: Record<Size, string> = {
@@ -36,26 +26,16 @@ export function buttonClass(variant: Variant = "primary", size: Size = "md", ext
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: Variant;
   size?: Size;
-  /** Render the class onto the single child (e.g. a Link or <a>) instead of a <button>. */
   asChild?: boolean;
   children: ReactNode;
 }
 
-export function Button({
-  variant = "primary",
-  size = "md",
-  asChild = false,
-  className = "",
-  children,
-  ...rest
-}: ButtonProps) {
+export function Button({ variant = "primary", size = "md", asChild = false, className = "", children, ...rest }: ButtonProps) {
   const cls = buttonClass(variant, size, className);
   if (asChild) {
     const child = Children.only(children) as ReactElement<{ className?: string }>;
     if (isValidElement(child)) {
-      return cloneElement(child, {
-        className: `${cls} ${child.props.className ?? ""}`.trim(),
-      });
+      return cloneElement(child, { className: `${cls} ${child.props.className ?? ""}`.trim() });
     }
   }
   return (
