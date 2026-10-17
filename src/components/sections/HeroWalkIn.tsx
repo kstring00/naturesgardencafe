@@ -87,13 +87,13 @@ export function HeroWalkIn({
           </div>
         )}
         {/* soft base so the paper tag and buttons always sit on something quiet */}
-        <div aria-hidden="true" className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-tinta/55 via-tinta/15 to-transparent" />
+        <div aria-hidden="true" className="absolute inset-x-0 bottom-0 h-3/4 bg-gradient-to-t from-tinta/75 via-tinta/30 to-transparent" />
 
         <div className="absolute inset-x-0 bottom-0">
           <div className="mx-auto max-w-7xl px-5 pb-10 sm:px-8 sm:pb-14 md:grid md:grid-cols-12 md:gap-8">
             <div className="md:col-span-9 lg:col-span-8">
               <Ribbon as="h1" id="hero-title" className="w-full max-w-4xl">
-                <span className="display-italic block text-center text-tinta" style={{ fontSize: "clamp(1.35rem, 2.6vw, 2.5rem)" }}>
+                <span className="display-italic block text-center text-tinta" style={{ fontSize: "clamp(1.35rem, 2.6vw, 2.5rem)", fontWeight: 640, textShadow: "0 1px 0 rgba(251,248,241,0.35)" }}>
                   Argentinian food, organic and natural, inside{" "}
                   <span className="whitespace-nowrap">Nature&rsquo;s Garden</span>, Friendswood.
                 </span>
@@ -105,7 +105,7 @@ export function HeroWalkIn({
 
               <div id="hero-actions" className="mt-5 flex flex-col items-start gap-3 sm:flex-row sm:items-center sm:gap-4">
                 <OrderDeliveryButton source="hero" />
-                <OrderPickupButton source="hero" className="border-blanco text-blanco hover:bg-blanco hover:text-tinta" />
+                <OrderPickupButton source="hero" className="!border-blanco !bg-blanco !text-tinta hover:!bg-tinta hover:!text-blanco" />
               </div>
 
               {stock && (
